@@ -18,6 +18,11 @@ export type JsonInit = Omit<RequestInit, 'body' | 'method'> & {
 
 function joinUrl(path: string): string {
   if (path.startsWith('http')) return path
+  if (!API_BASE_URL) {
+    throw new Error(
+      'No hay URL base de API. Define VITE_API_URL en el build (Vercel: Environment Variables y un deployment nuevo).',
+    )
+  }
   const normalizedPath = path.startsWith('/') ? path : `/${path}`
   return `${API_BASE_URL}${normalizedPath}`
 }

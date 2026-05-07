@@ -20,6 +20,11 @@ export function runTestApi(url: string, signal?: AbortSignal): Promise<RunTestRe
 }
 
 export function screenshotPublicUrl(backendPath: string): string {
+  if (!API_BASE_URL) {
+    throw new Error(
+      'No hay URL base de API para la captura. Define VITE_API_URL en el build y redeploy.',
+    );
+  }
   const trimmed = backendPath.trim();
   const relativePath = trimmed.includes('screenshots/')
     ? trimmed.slice(trimmed.indexOf('screenshots/'))
