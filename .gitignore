@@ -1,0 +1,22 @@
+# Variables de entorno — no subir al repo
+backend/.env
+.env
+.env.local
+
+# Python
+backend/venv/
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+
+# Screenshots generados
+backend/screenshots/
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea

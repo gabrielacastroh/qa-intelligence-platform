@@ -1,0 +1,32 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: qa-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    volumes:
+      # Persist screenshots between restarts
+      - ./backend/screenshots:/app/screenshots
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: qa-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      # The browser (on the host) reaches the backend through localhost
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
